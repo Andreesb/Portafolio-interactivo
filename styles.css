@@ -208,8 +208,7 @@ label, input#username {
 }
 
 .nintendo-image {
-    max-width: 95%;
-    height: auto;
+    width: 95vw;
     z-index: 16;
 }
 
@@ -241,65 +240,65 @@ label, input#username {
 
 .up {
     top: 45.7%;
-    left: 10.8%;
+    left: 8.9%;
 }
 
 .left {
     top: 54%;
-    left: 6.5%;
+    left: 4.3%;
 }
 
 .right {
     top: 54%;
-    left: 15.1%;
+    left: 13.4%;
 }
 
 .down {
     top: 62.5%;
-    left: 10.8%;
+    left: 8.9%;
 }
 
 .X {
     top: 24%;
-    right: 10.5%;
+    right: 8.5%;
 }
 
 .Y {
     top: 32.5%;
-    right: 14.7%;
+    right: 13%;
 }
 
 .A {
     top: 32.5%;
-    right: 6.1%;
+    right: 4.1%;
 }
 
 .B {
     top: 40.7%;
-    right: 10.5%;
+    right: 8.5%;
 }
 
 .start {
     top: 77.7%;
-    left: 16%;
-    width: 27px;
-    height: 27px;
+    left: 14%;
+    width: 1.5vw;
+    height: 1.7vw;
     border-radius: 10%;
 }
 
 .pause {
     top: 77.2%;
-    right: 15.7%;
-    width: 37px;
-    height: 37px;
+    right: 13.8%;
+    width: 2vw;
+    height: 2vw;
     border-radius: 50%;
 }
 
 .screen {
     position: absolute;
     top: 18%;
-    left: 27%;
-    width: 47%;
+    left: 26%;
+    width: 49%;
     height: 65%;
     z-index: 5;
     background-color: rgb(17, 17, 17);
@@ -326,18 +325,18 @@ label, input#username {
     cursor: pointer;
     transform: translate(-50%, -50%);
     box-shadow: inset 0 0 100px rgba(77, 76, 76, 0.5);
-    border: 4.5px solid #000;
+    border: 0.35vw solid #000;
     touch-action: none;
 }
 
 .left-joystick {
     top: 30%;
-    left: 12.4%;
+    left: 10.4%;
 }
 
 .right-joystick {
     top: 62.3%;
-    right: 6.90%;
+    left: 90.1%;
 }
 
 .volume-control {
@@ -358,14 +357,14 @@ label, input#username {
 
 .volume-control.plus {
     top: 15%;
-    right: 16.7%;
+    right: 14.9%;
     color: rgba(73, 71, 71, 0.1);
     font-size: 420%;
 }
 
 .volume-control.minus {
     top: 15%;
-    left: 15.7%;
+    left: 14%;
     width: 3.2%;
     height: 1%;
 }
@@ -576,23 +575,19 @@ label, input#username {
 
 #content-projects {
     display: flex;
-    max-width: 857px;
-    max-height: 600px;
 
 }
 
 .project-folders {
     background-color: rgba(255, 0, 0, 0.699);
-    width: 100%;
-    max-width: 857px;
-    max-height: 600px;
+    width: 45vw;
     justify-content: center;
-    height: 100%;
+    height: 31.5vw;
     position: absolute;
     top: 2.25%;
-    left: 1%;
+    left: 0.5%;
     z-index: 15;
-    border: 5px solid #ff0000 ;
+    border: 0.4vw solid #ff0000 ;
     border-radius: 3%;
     overflow: hidden;
 
@@ -626,16 +621,15 @@ label, input#username {
     display: none;
     position: absolute;
     top: 2.7%;
-    left: 1.32%;
-    width: 100%;
-    height: 100%;
+    left: 1%;
+    width: 44.4vw;
+    height: 31vw;
     z-index: 16;
     background-color: rgba(255, 255, 255, 0.750);
-    border: 5px solid #000;
+    border: 0.4vw solid #000;
     border-radius: 3%;
     align-content: center;
-    max-width: 852px;
-    max-height: 595px;
+
 }
 
 .project-title {
@@ -677,14 +671,12 @@ label, input#username {
     position: absolute;
     bottom: 2%;
     left: 1%;
-    max-width: 856px;
-    max-height: 600px;
-    width: 100%;
-    height: 100%;
+    width: 44.9vw;
+    height: 31.2vw;
     background-position: center;
     background-size: cover;
     background-color: rgba(255, 255, 255, 0.699);
-    border: 5px solid #ffffff;
+    border: 0.4vw solid #ffffff;
     border-radius: 3%;
     overflow: hidden;
     transition: background-image 0.5s;
@@ -787,13 +779,11 @@ label, input#username {
 
 .carousel {
     position: relative;
-    left: 1.15%;
+    left: 0.5%;
     top: 2.5%;
     display: flex;
-    width: 100%;
-    height: 100%;
-    max-width: 855px;
-    max-height: 598px;
+    width: 45.2vw;
+    height: 31.4vw;
     justify-content: center;
     background-color: rgba(255, 255, 255, 0.705);
     border: 0.3vw solid rgb(39, 89, 255);
@@ -816,11 +806,8 @@ label, input#username {
 
 .carousel-image {
     z-index: 16;
-    width: 100%;
-    max-width: 100px;
-    max-height: 65px;
-    margin: 0 1% 1%;
-    cursor: pointer;
+    width: 4.5vw;
+    margin: 0 1% 2%;
     opacity: 70%;
     transition: opacity 0.3s;
     background-color: transparent !important;
@@ -830,13 +817,11 @@ label, input#username {
 
 .certificado {
     position: relative;
-    bottom:300%;
+    bottom:340%;
     left: 50%;
     transform: translate(-50%, -50%);
-    max-height: 500px;
-    max-width: 700px;
-    min-width: 400px;
-    min-height: 200px;
+    height: 21vw;
+    width: 36vw;
     z-index: 45;
     background-color: transparent !important;
 
@@ -848,16 +833,14 @@ label, input#username {
     bottom: 100% ;
     text-align: left;
     background-color: #ffee007e;
-    border-radius: 7px;
-    border: 5px solid #080808;
+    border-radius: 0.7vw;
+    border: 0.4vw solid #080808;
     z-index: 50;
-    padding: 15px;
-    max-width: 500px;
-    width: 100%;
-    max-height: 85px;
-    height: 100%;
+    padding: 1vw;
+    width: 22vw;
+    height: 5vw;
     animation: none;
-    font-size: 1vw;
+    font-size: 0.7vw;
 
 }
 
@@ -881,45 +864,39 @@ label, input#username {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 100%;
-    width: 100%;
-    max-height: 900px;
-    max-width: 600px;
+    height: 32vw;
+    width: 45vw;
     justify-content: center;
     align-items: center;
-    gap: 30px;
-    margin-bottom: 20px;
+    gap: 2vw;
     animation: fadeIn 0.5s ease-in-out;
-    
+    font-size: 1vw;
+    text-align: center;
 }
 
 .report-buttons img {
     background-color: transparent !important;
-    max-height: 85px;
+    height: 5vw;
 }
 
 
 .menu-button {
-    padding: 10px 20px;
-    border: 2px solid transparent;
+    width: 12vw;
+    height: 10vw;
+    padding: 2vw 2vw;
+    border: 0.2vw solid transparent;
     background-color: #007BFF;
     color: white;
-    border-radius: 4px;
+    border-radius: 0.4vw;
     z-index: 1000;
     align-self: center;
+    font-size: 1vw;
+    font-family: 'Public Pixel';
+    margin: 1.5vw;
     
 }
 
-.relevance-button {
-    padding: 10px 20px;
-    border: 2px solid transparent;
-    background-color: #007BFF;
-    color: white;
-    border-radius: 4px;
-    z-index: 1000;
-    align-self: center;
-    
-}
+
 
 .menu-button:focus {
     outline: none;
@@ -929,10 +906,10 @@ label, input#username {
 .form-container {
     display: flex;
     flex-wrap: wrap;
-    width: 97%;
-    height: 96%;
+    width: 45.6vw;
+    height: 32vw;
     top: 2.2%;
-    left: 1.1%;
+    left: 0.5%;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
@@ -942,92 +919,137 @@ label, input#username {
     box-sizing: border-box;
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 3%;
-    border: 5px solid #1ee417;
+    border: 0.4vw solid #1ee417;
     overflow: hidden;
+    font-size: 1vw;
 }
 
 .form-container h1 {
-    position: relative;
+    position: absolute;
     top: 10%;
-    left: 20%;
+    left: 50%;
     transform: translate(-50%, -50%);
+    font-size: 2vw;
+    width: 25vw;
 }
 
-.form-container.hide {
-    display: none;
-}
 
 .form-container label {
     display: block;
-    margin: 5px 0;
+    margin: 0.7vw 0;
     font-weight: bold;
+
 }
 
 .form-container input,
 .form-container select,
 .form-container textarea {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-    max-width: 370px;
+    border: 0.1vw solid #ccc;
+    border-radius: 0.4vw;
+    width: 18vw;
     font-weight: bold;
-    font-size: small;
-    margin-bottom: 10px;
+    font-size: 0.8vw;
 }
 
 .form-container textarea {
-    height: 100px;
+    height: 8vw;
     resize: horizontal;
 }
 
 .report-form {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    width: 100%;
-    padding: 26px;
+    width: 44vw;
+    padding: 1vw;
+    top: 20%;
 }
 
-.suggest-form {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    position: absolute;
+.relevance-button {
+    padding: 0.5vw 0.5vw;
+    border: 0.2vw solid transparent;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 0.4vw;
+    z-index: 1000;
+    align-self: center;
+    font-size: 1vw;
 }
+
+
 
 .column {
     flex: 1;
-    min-width: 50%;
-    margin-bottom: 10%;
+    width: 50vw;
+    height: 26vw;
 }
 
 .column label {
     display: block;
-    margin-bottom: 5px;
-    font-size: 1em;
+    font-size: 1vw;
+    width: 12vw;
+    height: 1.7vw;
 }
+
+
+
 
 .column input,
 .column textarea,
 .column .satisfaction {
-    width: 100%;
-    padding: 8px;
+    width: 18vw;
+    padding: 0.7vw;
     box-sizing: border-box;
 }
+
+
+#suggest-form {
+    display: flex;
+    flex-wrap: wrap;
+    width: 22vw;
+    position: absolute;
+}
+
+
+#suggest-form .column {
+    flex: 1;
+    width: 20w;
+    height: 11vw;
+
+}
+
+#suggest-form .column label {
+    display: block;
+    margin-bottom: 1.5vw;
+    font-size: 1vw;
+    width: 4vw;
+    height: 1.5vw;
+}
+
+#suggest-form .column input,
+#suggest-form .column textarea,
+#suggest-form .column .satisfaction {
+    width: 100%;
+    padding: 0.8vw;
+    box-sizing: border-box;
+}
+
 
 .satisfaction {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
+    gap: 0.5vw;
     justify-items: center;
-    margin-top: 10px;
-    width: 100%;
+    margin-top: -01vw;
+
 }
 
 .satisfaction label {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 3vw;
 }
 
 .satisfaction input[type="radio"] {
@@ -1035,17 +1057,12 @@ label, input#username {
 }
 
 
-
-
 button.relevance-button {
-    margin: 5px;
+    margin: 0.5vw;
 }
 
 .relevance-buttons {
     display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-    
 }
 
 .confirmation-dialog {
@@ -1119,23 +1136,23 @@ body.dark-background::before {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    width: 100%;
-    height: 100%;
-    max-width: 857px;
-    max-height: 600px;
+    width: 45vw;
+    height: 31.4vw;
     position: absolute;
-    top: 2.5%;
-    left: 1%;
+    top: 2.2%;
+    left: 0.5%;
     background: rgba(238, 160, 72, 0.644);
-    border: 5px solid #c48e1c;
+    border: 0.4vw solid #c48e1c;
     border-radius: 3%;
     overflow: hidden;
+    font-size: 1.2vw;
 }
 
 .contact-list h1 {
     position: relative;
-    top: 3.5%;
-    left: 30%;
+    top: 2.5%;
+    left: 25%;
+    font-size: 2vw;
 
 
 }
@@ -1144,19 +1161,16 @@ body.dark-background::before {
     display: flex;
     align-items: center;
     margin: 0 1% 0;
-    cursor: pointer;
     position: relative;
     padding-right: 600px;
     transition: transform 0.3s ease;
-    top: 1%;
+    width: 41vw;
+    height: 4vw;
 }
 
 .contact-item img {
-    width: 100%;
-    height: 100%;
-    max-width: 80px;
-    max-height: auto;
-    margin-left: 25px;
+    width: 4vw;
+    margin-left: 1.5vw;
     transition: transform 0.3s ease-in-out;
     background-color: transparent !important;
 }
@@ -1168,24 +1182,24 @@ body.dark-background::before {
 .contact-info {
     display: none;
     position: relative;
-    left: 5%;
+    left: 7%;
     top: 0;
     background: rgba(0, 58, 165, 0.699);
     padding: 2.5%;
-    border: 5% solid #ffffff;
-    width: 600px;
+    height: 4vw;
     overflow: hidden;
     transition: max-width 0.5s ease, padding 0.5s ease;
 }
 
 .contact-info.expanded {
     display: block;
-    max-width: 300vw;
+    width: 26vw;
+    font-size: 1vw;
 }
 
 .contact-info h2 {
     margin: 0;
-    font-size: 1.5em;
+    font-size: 1em;
     opacity: 0;
     transition: opacity 0.5s ease;
 }
@@ -1195,7 +1209,7 @@ body.dark-background::before {
 }
 
 .contact-info p {
-    margin: 10px 0;
+    margin: 0.5vw 0;
 }
 
 .contact-info a {
@@ -1205,7 +1219,7 @@ body.dark-background::before {
 
 .active-email img {
     transform: scale(1.2);
-    border: 2px solid yellow;
+    border: 0.2vw solid yellow;
     border-radius: 2%;
 }
 
@@ -1222,15 +1236,14 @@ body.dark-background::before {
 }
 
 .email-options li a img {
-    width: 50px;
-    height: 50px;
+    width: 2vw;
     transition: transform 0.2s ease;
 }
 
 .email-options li a img:hover {
     transform: scale(1.1);
 }
-
+/* Config section*/
 
 .settings-list {
     list-style: none;

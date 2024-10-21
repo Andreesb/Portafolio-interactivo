@@ -878,7 +878,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else if (isContentVisible('option1')) {
                 openFolder(selectedFolderIndex);
                 } else if (isContentVisible('option3')) {
-                showImageContent(currentIndex);
+                openCertificate(currentIndex);
                 } else if (isContentVisible('option4')) {
                     if (reportMenu.style.display == 'flex'){
                         openForm(menuButtons[selectedButtonIndex].getAttribute('data-form'));
@@ -1217,7 +1217,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     document.addEventListener('keydown', function(event) {
-        if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+        if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'ArrowRight' || event.key === 'ArrowLeft' ) {
             event.preventDefault();
         }
     });
