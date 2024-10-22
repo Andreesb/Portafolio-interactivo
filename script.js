@@ -140,8 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     bar.classList.add('medium');
                 }
             } else {
-                bar.style.height = '1vh'; // Altura más pequeña para las barras no activas
-                bar.style.width = '1vw';
+                bar.style.height = '0.3vh'; // Altura más pequeña para las barras no activas
                 bar.classList.remove('low', 'medium');
             }
         });
@@ -1217,7 +1216,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     document.addEventListener('keydown', function(event) {
-        if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'ArrowRight' || event.key === 'ArrowLeft' ) {
+        if (event.key === 'ArrowUp' || event.key === 'ArrowDown' ||
+            event.key === 'ArrowRight' || event.key === 'ArrowLeft' ) {
             event.preventDefault();
         }
     });
