@@ -71,7 +71,7 @@ main {
     position: fixed;
     top: 0;
     left: 0;
-    width: 95vw;
+    width: 96vw;
     height: 96vh;
     background-color: rgba(0, 0, 0, 0.8);
     color: #ffffff;
@@ -90,44 +90,38 @@ main {
     width: 8vw; /* Ajusta el tamaño según sea necesario */
     opacity: 0; /* Empieza invisible */
     position: absolute;
-    bottom: 15%; /* Posición inicial */
-    transform: translateX(-585%); /* Fuera de la pantalla a la izquierda */
-    transition: transform 3.5s ease-in-out, opacity 0.1s ease-in-out;
+    bottom: 27%; /* Posición inicial */
+    left: 15%;
+    transform: translateX(-600%); /* Fuera de la pantalla a la izquierda */
+    transition: transform 5s ease-in-out, opacity 0.1s ease-in-out;
+    z-index: 1050;
 }
 
 
 
 .kirby.enter {
     opacity: 1;
-    transform: translateX(-50%) rotateZ(-50deg) ; /* Se desplaza al centro */
-}
-
-.kirby.inhale {
- /* Cambiar la imagen de Kirby inhalando (JS manejará el cambio) */
-    width: 30vw;
-    bottom: 10%;
-    left: 50%;
-    transform: translate(-35%) rotateZ(-50deg); /* Desplazamiento al centro y rotación */
-    transition: transform 4s ease-in-out, transform 3.5s ease-out
+    transform: rotateZ(-15deg) ; /* Se desplaza al centro */
 }
 
 .kirby.exit {
-    transform: translateX(585%); /* Reflejado y se mueve hacia la derecha */
-    transition: transform 2s ease-in-out, transform 3s ease-out
+    transform: translate(600%);
+    transition: transform 5s ease-out, transform 5s ease-in-out;
 }
 
 .small-and-move {
     position: absolute; /* Asegúrate de que se pueda mover */
-    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; /* Suaviza la transformación y el desvanecimiento */
+    transition: transform 0.1s ease-in-out, opacity 0.1s ease-in-out; /* Suaviza la transformación y el desvanecimiento */
     transform-origin: center; /* Cambia el punto de origen para la escala */
     opacity: 1; /* Asegúrate de que esté visible inicialmente */
     top: 50%; /* Centramos verticalmente el texto */
     left: 50%; /* Centramos horizontalmente el texto */
     transform: translate(-50%, -50%); /* Alinea el centro del texto con el centro de la pantalla */
+    z-index: 1010;
 }
 
 .small-and-move.moving {
-transform: translate(-50%, -50%) scale(0.5) translateX(90%); /* Mueve el texto hacia arriba y reduce el tamaño */
+transform: translate(-125%, 10%) scale(0.1) translateY(100%); /* Mueve el texto hacia arriba y reduce el tamaño */
 opacity: 0; /* Desvanece el texto */
 }
 

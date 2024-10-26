@@ -1604,34 +1604,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Mostrar a Kirby entrando después de 1 segundo
                 setTimeout(() => {
                 kirby.classList.add('enter');
-                }, 50);
-        
-                // Cambiar a Kirby inhalando después de 1.5 segundos
-                setTimeout(() => {
-                    kirby.src = "media/nintendo/os/assistant/Kirbynhaling.gif"; // Cambia a GIF de Kirby inhalando
-                    kirby.classList.add('inhale');
-                    message.classList.add('small-and-move'); // Agrega la clase para el efecto en el texto
-                    message.style.opacity = '0'; // Desvanece el mensaje
-                }, 3000);
+                }, 75);
         
                 // Devolver a Kirby caminando reflejado después de 1.5 segundos
                 setTimeout(() => {
-                kirby.src = "media/nintendo/os/assistant/walking-kirby.gif"; // Cambia de nuevo a GIF de Kirby caminando
-                kirby.classList.remove('inhale');
-                kirby.classList.remove('enter');
-                kirby.classList.add('exit'); // Agrega la clase para salir
-                
-                // Asegúrate de que el mensaje se mueva hacia Kirby
+                // // Asegúrate de que el mensaje se mueva hacia Kirby
                 message.classList.add('moving'); // Agrega la clase que activa el movimiento
+                kirby.classList.remove('enter');
+                kirby.classList.add('exit');
 
 
-                }, 3400);
+
+                }, 4500);
         
                 // Ocultar el overlay al final de la animación
                 setTimeout(() => {
                 overlay.style.display = 'none';
                 kirby.classList.remove('exit');
-                }, 6500);
+                message.classList.remove('moving');
+                }, 8000);
             }
         } else {
           overlay.style.display = 'none'; // Ocultar overlay en otros dispositivos
@@ -1641,10 +1632,6 @@ document.addEventListener('DOMContentLoaded', () => {
       // Verifica la orientación al cargar y cada vez que cambia el tamaño de la ventana
     window.addEventListener('load', checkOrientation);
     window.addEventListener('resize', checkOrientation);
-
-            
-
-
 
 
 
