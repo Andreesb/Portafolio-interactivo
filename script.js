@@ -441,6 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const testCertificates = isContentVisible('option3');
         const testReport = isContentVisible('option4');
         const testContact = isContentVisible('option5');
+        const settingsVisible = isContentVisible('option6')
         const isReportFormVisible = document.querySelector('#form-reports').classList.contains('show');
         const isSuggestFormVisible = document.querySelector('#form-suggests').classList.contains('show');
 
@@ -502,7 +503,14 @@ document.addEventListener('DOMContentLoaded', () => {
             updateActiveContact(0);
             showMenu();
 
-        } else {
+        } else if(settingsVisible) {
+            if (settingsList.classList.contains('.show')){
+                hideContent('option6')};
+            } else if (editUserModal.classList.contains('show')) {
+                hideEditUserModal();
+            }
+            
+        else {  
             return
         }
     }
@@ -651,19 +659,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function isContentVisible(sectionClass) {
-        const contentElement = document.querySelector(`.${sectionClass}`);
-        
-        // Verifica si el elemento existe antes de continuar
-        if (!contentElement) {
-            console.error(`No se encontró ningún elemento con la clase: ${sectionClass}`);
-            return false;
-        }
+    const contentElement = document.querySelector(`.${sectionClass}`);
     
-
-        const isVisible = contentElement.classList.contains('show');
-        
-        return isVisible;
+    // Verifica si el elemento existe antes de continuar
+    if (!contentElement) {
+        console.error(`No se encontró ningún elemento con la clase: ${sectionClass}`);
+        return false;
     }
+
+    // Verifica si el elemento está realmente visible en el DOM
+    if (contentElement.offsetParent === null) {
+        return false;
+    }
+
+    // Verifica si el elemento tiene la clase 'show'
+    const isVisible = contentElement.classList.contains('show');
+
+    return isVisible;
+}
     
 
 
@@ -671,7 +684,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleNavigation(direction) {
         const now = Date.now();
         if (now - lastMoveTime < joystickMoveDelay) return;
-    
+
         const projectsVisible = isContentVisible('option1');
         const resumeVisible = isContentVisible('option2');
         const carouselVisible = isContentVisible('option3');
@@ -682,7 +695,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const settingsVisible = isContentVisible('option6');
         const editUserVisible = document.getElementById('edit-user-modal').classList.contains('show');
         const menuVisible = menuContainer.classList.contains('show');
-    
+
         const navigationHandlers = {
             menu: {
                 up: () => selectedOptionIndex = (selectedOptionIndex - 3 + options.length) % options.length,
@@ -712,10 +725,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 right: () => navigateMenu(direction),
                 update: () => selectMenuButton(selectedButtonIndex)
             },
-            forms: {
-                navigate: () => navigateFormFields(direction, isReportFormVisible ? reportForm : suggestForm),
-                update: () => selectFormField(index, form)
-            },
             projectContent: {
                 up: () => selectedFolderIndex = (selectedFolderIndex - 1 + folders.length) % folders.length,
                 down: () => selectedFolderIndex = (selectedFolderIndex + 1) % folders.length,
@@ -739,19 +748,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 select: () => handleAvatarNavigation({ key: 'Enter' })
             }
         };
-    
+
         const context = [
             { check: menuVisible, handler: navigationHandlers.menu },
             { check: carouselVisible, handler: navigationHandlers.carousel },
             { check: contactListVisible, handler: navigationHandlers.contactList },
             { check: reportsVisible, handler: navigationHandlers.reportMenu },
-            { check: isReportFormVisible || isSuggestFormVisible, handler: navigationHandlers.forms },
             { check: projectsVisible, handler: navigationHandlers.projectContent },
             { check: resumeVisible, handler: navigationHandlers.cards },
             { check: settingsVisible, handler: navigationHandlers.settings },
             { check: editUserVisible, handler: navigationHandlers.editUser }
         ];
-    
+
         for (const { check, handler } of context) {
             if (check) {
                 if (handler[direction]) {
@@ -763,9 +771,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
             }
         }
-    
+
         lastMoveTime = now;
     }
+
     
     
 
@@ -891,8 +900,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         } else if (document.activeElement === backButton) {
                             hideConfirmationMessage();
                         }
+                    } else if (isContentVisible('option6')){
+                        handleAction('openUserModal')
                     }
-                
+                        
             } else if (buttonClass === 'Y') {
                 goBack();
             } else if (buttonClass === 'plus' || buttonClass === 'minus') {
@@ -926,9 +937,6 @@ document.addEventListener('DOMContentLoaded', () => {
         changeVolume('down');
         setTimeout(() => changeImage('volume-down', false), 100);
     });
-
-
-
 
 
 
@@ -1238,7 +1246,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Navegación por las opciones usando flechas o botones del Nintendo
     document.addEventListener('keydown', (event) => {
-        switch (event.key) {
+        if (!editUserModal && isContentVisible('option6')){
+            switch (event.key) {
             case 'ArrowUp': // Navegar hacia arriba
                 currentIndex = (currentIndex > 0) ? currentIndex - 1 : settingsOption.length - 1;
                 updateActiveOption(currentIndex);
@@ -1259,7 +1268,7 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'Escape':
                 hideEditUserModal();
                 break;
-        }
+        }}
     });
 
     function handleAction(action) {
@@ -1455,124 +1464,185 @@ document.addEventListener('DOMContentLoaded', () => {
         
     }
 
-        // Variables
-        const overlay = document.getElementById('overlay');
-        const createModal = document.getElementById('create-user-modal');
-        const submitButton = document.getElementById('submit-user');
-        const avatarImages = document.querySelectorAll('.avatar');
-        const userInfo = document.getElementById('user-info');
-        let selectedAvatar = '';
-    
-        if (!localStorage.getItem('username') || !localStorage.getItem('avatar')) {
-            console.log("No hay usuario en localStorage, mostrando modal");
-            overlay.style.display = 'block';
-            createModal.style.display = 'block';
-            console.log('se esta mostrando el modal')
-            showCreateUserModal();
-        } else {
-            console.log("Usuario encontrado en localStorage, mostrando información del usuario");
+    // Variables
+    const overlay = document.getElementById('overlay');
+    const createModal = document.getElementById('create-user-modal');
+    const submitButton = document.getElementById('submit-user');
+    const avatarImages = document.querySelectorAll('.avatar');
+    const userInfo = document.getElementById('user-info');
+    let selectedAvatar = '';
+
+    if (!localStorage.getItem('username') || !localStorage.getItem('avatar')) {
+        console.log("No hay usuario en localStorage, mostrando modal");
+        overlay.style.display = 'block';
+        createModal.style.display = 'block';
+        console.log('se esta mostrando el modal')
+        showCreateUserModal();
+    } else {
+        console.log("Usuario encontrado en localStorage, mostrando información del usuario");
+        showUserInfo();
+    }
+
+
+    avatarImages.forEach(img => {
+        img.addEventListener('click', function () {
+            avatarImages.forEach(img => img.classList.remove('selected'));
+            this.classList.add('selected');
+            selectedAvatar = this.getAttribute('data-avatar');
+            console.log("Avatar seleccionado:", selectedAvatar);
+        });
+    });
+
+    // Guardar usuario y avatar en localStorage
+    submitButton.addEventListener('click', function () {
+        const username = document.getElementById('username').value;
+        console.log("Nombre ingresado:", username);
+        if (username && selectedAvatar) {
+            localStorage.setItem('username', username);
+            localStorage.setItem('avatar', selectedAvatar);
+            console.log("Usuario guardado en localStorage");
+            overlay.style.display = 'none';
+            createModal.style.display = 'none';
             showUserInfo();
+        } else {
+            alert('Por favor, ingrese un nombre y seleccione un avatar.');
         }
+    });
+
+    // Mostrar información del usuario
+    function showUserInfo() {
+        let username = localStorage.getItem('username');
+        let avatar = localStorage.getItem('avatar');
+        userInfo.innerHTML = `
+            <img src="${avatar}" alt="Avatar">
+            <span>${username}</span>
+        `;
+        userInfo.style.display = 'flex';
+    }
+
+    let currentAvatarIndex = 0;
+
+    // Función para manejar la navegación con las flechas y permitir índices circulares
+    function handleAvatarNavigation(event) {
+        const avatarSelection = document.getElementById('edit-avatar-selection') || ('create-avatar-selection');
+        const avatars = Array.from(avatarSelection.querySelectorAll('.avatar'));
+        const rowLength = 7;
     
+        // Quitar la clase seleccionada del avatar actual
+        avatars[currentAvatarIndex].classList.remove('selected');
     
-        avatarImages.forEach(img => {
-            img.addEventListener('click', function () {
-                avatarImages.forEach(img => img.classList.remove('selected'));
-                this.classList.add('selected');
-                selectedAvatar = this.getAttribute('data-avatar');
+        switch (event.key) {
+            case 'ArrowUp':
+                // Si estamos en una fila superior, saltamos a la última fila.
+                if (currentAvatarIndex - rowLength < 0) {
+                    currentAvatarIndex = (avatars.length - rowLength) + (currentAvatarIndex % rowLength);
+                } else {
+                    currentAvatarIndex -= rowLength;
+                }
+                break;
+            case 'ArrowDown':
+                // Si estamos en la última fila, saltamos a la fila superior.
+                if (currentAvatarIndex + rowLength >= avatars.length) {
+                    currentAvatarIndex = currentAvatarIndex % rowLength;
+                } else {
+                    currentAvatarIndex += rowLength;
+                }
+                break;
+            case 'ArrowLeft':
+                // Si estamos en el primer avatar, saltamos al último.
+                if (currentAvatarIndex === 0) {
+                    currentAvatarIndex = avatars.length - 1;
+                } else {
+                    currentAvatarIndex--;
+                }
+                break;
+            case 'ArrowRight':
+                // Si estamos en el último avatar, saltamos al primero.
+                if (currentAvatarIndex === avatars.length - 1) {
+                    currentAvatarIndex = 0;
+                } else {
+                    currentAvatarIndex++;
+                }
+                break;
+            case 'Enter':
+
+                const selectedAvatar = avatars[currentAvatarIndex].getAttribute('data-avatar');
+                avatars[currentAvatarIndex].classList.add('selected');
+                localStorage.setItem('avatar', selectedAvatar); // Guardar en localStorage
                 console.log("Avatar seleccionado:", selectedAvatar);
-            });
-        });
+                break;
+        }
     
-        // Guardar usuario y avatar en localStorage
-        submitButton.addEventListener('click', function () {
-            const username = document.getElementById('username').value;
-            console.log("Nombre ingresado:", username);
-            if (username && selectedAvatar) {
-                localStorage.setItem('username', username);
-                localStorage.setItem('avatar', selectedAvatar);
-                console.log("Usuario guardado en localStorage");
-                overlay.style.display = 'none';
-                createModal.style.display = 'none';
-                showUserInfo();
+        avatars[currentAvatarIndex].classList.add('selected');
+    }
+    
+    document.addEventListener('keydown', function(event) {
+        if (document.getElementById('edit-user-modal').classList.contains('hide') === false) {
+            handleAvatarNavigation(event);
+        }
+    });
+
+    function checkOrientation() {
+        const overlay = document.getElementById('rotate-overlay');
+        const kirby = document.getElementById('kirby-gif');
+        const message = document.getElementById('rotate-message');
+        const isMobileOrTablet = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+        if (isMobileOrTablet) {
+            overlay.style.display = 'flex';
+        
+            if (window.innerHeight > window.innerWidth) {
+                // Modo vertical: solo muestra el mensaje
+                kirby.style.display = 'none';
+                kirby.style.opacity = '0'
+                message.style.opacity = '1'; // Asegúrate de que el mensaje sea visible
             } else {
-                alert('Por favor, ingrese un nombre y seleccione un avatar.');
+                // Modo horizontal: inicia la animación de Kirby
+                kirby.style.display = 'block';
+                kirby.style.opacity = '1'
+                
+                // Mostrar a Kirby entrando después de 1 segundo
+                setTimeout(() => {
+                kirby.classList.add('enter');
+                }, 50);
+        
+                // Cambiar a Kirby inhalando después de 1.5 segundos
+                setTimeout(() => {
+                    kirby.src = "media/nintendo/os/assistant/Kirbynhaling.gif"; // Cambia a GIF de Kirby inhalando
+                    kirby.classList.add('inhale');
+                    message.classList.add('small-and-move'); // Agrega la clase para el efecto en el texto
+                    message.style.opacity = '0'; // Desvanece el mensaje
+                }, 3000);
+        
+                // Devolver a Kirby caminando reflejado después de 1.5 segundos
+                setTimeout(() => {
+                kirby.src = "media/nintendo/os/assistant/walking-kirby.gif"; // Cambia de nuevo a GIF de Kirby caminando
+                kirby.classList.remove('inhale');
+                kirby.classList.remove('enter');
+                kirby.classList.add('exit'); // Agrega la clase para salir
+                
+                // Asegúrate de que el mensaje se mueva hacia Kirby
+                message.classList.add('moving'); // Agrega la clase que activa el movimiento
+
+
+                }, 3400);
+        
+                // Ocultar el overlay al final de la animación
+                setTimeout(() => {
+                overlay.style.display = 'none';
+                kirby.classList.remove('exit');
+                }, 6500);
             }
-        });
+        } else {
+          overlay.style.display = 'none'; // Ocultar overlay en otros dispositivos
+        }
+    }
     
-        // Mostrar información del usuario
-        function showUserInfo() {
-            let username = localStorage.getItem('username');
-            let avatar = localStorage.getItem('avatar');
-            userInfo.innerHTML = `
-                <img src="${avatar}" alt="Avatar">
-                <span>${username}</span>
-            `;
-            userInfo.style.display = 'flex';
-        }
+      // Verifica la orientación al cargar y cada vez que cambia el tamaño de la ventana
+    window.addEventListener('load', checkOrientation);
+    window.addEventListener('resize', checkOrientation);
 
-        let currentAvatarIndex = 0;
-
-        // Función para manejar la navegación con las flechas y permitir índices circulares
-        function handleAvatarNavigation(event) {
-            const avatarSelection = document.getElementById('edit-avatar-selection') || ('create-avatar-selection');
-            const avatars = Array.from(avatarSelection.querySelectorAll('.avatar'));
-            const rowLength = 7;
-        
-            // Quitar la clase seleccionada del avatar actual
-            avatars[currentAvatarIndex].classList.remove('selected');
-        
-            switch (event.key) {
-                case 'ArrowUp':
-                    // Si estamos en una fila superior, saltamos a la última fila.
-                    if (currentAvatarIndex - rowLength < 0) {
-                        currentAvatarIndex = (avatars.length - rowLength) + (currentAvatarIndex % rowLength);
-                    } else {
-                        currentAvatarIndex -= rowLength;
-                    }
-                    break;
-                case 'ArrowDown':
-                    // Si estamos en la última fila, saltamos a la fila superior.
-                    if (currentAvatarIndex + rowLength >= avatars.length) {
-                        currentAvatarIndex = currentAvatarIndex % rowLength;
-                    } else {
-                        currentAvatarIndex += rowLength;
-                    }
-                    break;
-                case 'ArrowLeft':
-                    // Si estamos en el primer avatar, saltamos al último.
-                    if (currentAvatarIndex === 0) {
-                        currentAvatarIndex = avatars.length - 1;
-                    } else {
-                        currentAvatarIndex--;
-                    }
-                    break;
-                case 'ArrowRight':
-                    // Si estamos en el último avatar, saltamos al primero.
-                    if (currentAvatarIndex === avatars.length - 1) {
-                        currentAvatarIndex = 0;
-                    } else {
-                        currentAvatarIndex++;
-                    }
-                    break;
-                case 'Enter':
-
-                    const selectedAvatar = avatars[currentAvatarIndex].getAttribute('data-avatar');
-                    avatars[currentAvatarIndex].classList.add('selected');
-                    localStorage.setItem('avatar', selectedAvatar); // Guardar en localStorage
-                    console.log("Avatar seleccionado:", selectedAvatar);
-                    break;
-            }
-        
-            avatars[currentAvatarIndex].classList.add('selected');
-        }
-        
-        document.addEventListener('keydown', function(event) {
-            if (document.getElementById('edit-user-modal').classList.contains('hide') === false) {
-                handleAvatarNavigation(event);
-            }
-        });
-        
+            
 
 
 

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Portafolio Interactivo</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="media/body/favicon.ico">
 </head>
 <body>
     <video autoplay muted loop class="backgroundVideo">
@@ -13,6 +14,10 @@
     <header>
         <img id="header-image" src="media/body/header2.png">
     </header>
+    <div id="rotate-overlay" class="overlay">
+        <p id="rotate-message" class="small-and-move">Please, rotate your phone for a better experience</p>
+        <img id="kirby-gif" class="kirby" src="media/nintendo/os/assistant/walking-kirby.gif" alt="Kirby walkinkg" />
+    </div>
     <main>
         <script src="https://luke-chang.github.io/js-spatial-navigation/spatial_navigation.js"></script>
         <link href="https://fonts.cdnfonts.com/css/public-pixel" rel="stylesheet">
@@ -405,7 +410,7 @@
                                 <label for="report-name">Report name:</label>
                                 <input type="text" id="report-name" name="name" placeholder="Example: 'Error when trying to open a contact option.'" data-index="3" required maxlength="48">
                                 <label for="report-email">Email:</label>
-                                <input type="email" id="report-email" name="email" placeholder="Your Email" data-index="4" required maxlength="45">
+                                <input type="email" id="report-email" name="email" placeholder="Example: 'juantest@gmail.com'" data-index="4" required maxlength="45">
                                 <label for="report-device">Device:</label>
                                 <input type="text" id="report-device" name="device" placeholder="Example: 'Iphone 15 XS'" data-index="5" maxlength="45">
                                 <label for="report-browser">Browser:</label>
@@ -434,19 +439,20 @@
                                 <input type="text" id="suggest-name" name="name" placeholder="Your Name" data-index="10" required>
                                 <label for="suggest-email">Email (optional):</label>
                                 <input type="email" id="suggest-email" name="email" placeholder="Your Email" data-index="11">
+                                <label for="suggest-device">Device:</label>
+                                <input type="text" id="suggest-name" name="suggest-device" placeholder="Your Device" data-index="13" required>
                             </div>
                             <div class="column">
-                                <label for="suggest-rating">Rating:</label>
                                 <label for="satisfaction">Satisfaction:</label>
                                     <div class="satisfaction" >
-                                        <label><input type="radio" name="satisfaction" value="1" data-index="12">1</label>
-                                        <label><input type="radio" name="satisfaction" value="2" data-index="13">2</label>
-                                        <label><input type="radio" name="satisfaction" value="3" data-index="14">3</label>
-                                        <label><input type="radio" name="satisfaction" value="4" data-index="15">4</label>
-                                        <label><input type="radio" name="satisfaction" value="5" data-index="16">5</label>
+                                        <label><input type="radio" name="satisfaction" value="1" data-index="13">1</label>
+                                        <label><input type="radio" name="satisfaction" value="2" data-index="14">2</label>
+                                        <label><input type="radio" name="satisfaction" value="3" data-index="15">3</label>
+                                        <label><input type="radio" name="satisfaction" value="4" data-index="16">4</label>
+                                        <label><input type="radio" name="satisfaction" value="5" data-index="17">5</label>
                                     </div>
                                 <label for="suggest-comment">Suggestion:</label>
-                                <textarea id="suggest-comment" name="comment" placeholder="Your Suggestion" data-index="17"></textarea required>
+                                <textarea id="suggest-comment" name="comment" placeholder="Your Suggestion" data-index="18"></textarea required>
                             </div>
                         </form>
                     </div>
