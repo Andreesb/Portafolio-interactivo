@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentFolderContents.forEach(content => {
             content.classList.remove('show');
             
-        // Si deseas mantener algún estilo o animación al ocultar, puedes hacerlo aquí
+
         });
 
     }
@@ -377,6 +377,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentIndex = 0;
         }
         updateCarousel();
+        console.log(isCertificateOpen)
     }
 
     document.addEventListener('keydown', function(event) {
@@ -385,6 +386,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 navigateCarouselLeft();
             } else if (event.key === 'ArrowRight') {
                 navigateCarouselRight();
+            } else if (isCertificateOpen && event.key === 'ArrowLeft') {
+                navigateCarouselLeft();
+                openCertificate(index);
+                console.log('se cambio a la izquierda y se abrio el certificado')
+            } else if (isCertificateOpen && event.key === 'ArrowRight') {
+                navigateCarouselRight();
+                openCertificate(index);
+                console.log('se cambio a la derecha y se abrio el certificado')
             }
         }
     });
@@ -399,6 +408,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 content.classList.remove('hide');
                 console.log("Se abrió una imagen del carrusel");
             }
+            isCertificateOpen = true
+
         }
     }
 
@@ -407,6 +418,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (selectedImageContent) {
             selectedImageContent.classList.remove('show');
             selectedImageContent.classList.add('hide');
+            isCertificateOpen = false
+
         }
         
     }
@@ -416,7 +429,7 @@ document.addEventListener('DOMContentLoaded', () => {
         img.addEventListener('click', () => {
             currentIndex = index;
             openCertificate(index);
-            isCertificateOpen = true;  // Marcar que se ha abierto un certificado
+            isCertificateOpen = true;
             updateCarousel();
         });
     });
@@ -434,7 +447,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to handle go back
     function goBack() {
         const folderContentVisible = projectSection && Array.from(projectSection.querySelectorAll('.project-content')).some(content => content.classList.contains('show'));
-        const carouselContentVisible = Array.from(images).some(img => img.classList.contains('show'));
+        const carouselContentVisible = certificateImage && Array.from(images).some(img => img.classList.contains('show'));
         const MenuVisible = menuContainer.classList.contains('show');
         const testProjects = isContentVisible('option1');
         const testResume = isContentVisible('option2');
@@ -468,12 +481,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log("se cerro el certificado")
                 updateCarousel();
                 isCertificateOpen = false;
-            } else {
+                console.log(isCertificateOpen);
+            } else if (!carouselContentVisible) {
             hideContent("option3");
             hideAllContent();
             showMenu();
-            console.log("se cerro la seccion de certificado")
-            currentIndex = 0
+            console.log("se cerro la seccion de certificado");
+            currentIndex = 0;
+            isCertificateOpen = false;
+            console.log(isCertificateOpen);
             }
         }  else if (MenuVisible) {
             hideMenu();
@@ -1587,51 +1603,73 @@ document.addEventListener('DOMContentLoaded', () => {
         const kirby = document.getElementById('kirby-gif');
         const message = document.getElementById('rotate-message');
         const isMobileOrTablet = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
+        let animationInProgress = false; // Bandera para controlar el estado de la animación
+        let animationCooldown = false; // Bloquea la animación hasta que termine
+      
         if (isMobileOrTablet) {
-            overlay.style.display = 'flex';
-        
-            if (window.innerHeight > window.innerWidth) {
-                // Modo vertical: solo muestra el mensaje
-                kirby.style.display = 'none';
-                kirby.style.opacity = '0'
-                message.style.opacity = '1'; // Asegúrate de que el mensaje sea visible
-            } else {
-                // Modo horizontal: inicia la animación de Kirby
-                kirby.style.display = 'block';
-                kirby.style.opacity = '1'
-                
-                // Mostrar a Kirby entrando después de 1 segundo
-                setTimeout(() => {
-                kirby.classList.add('enter');
-                }, 75);
-        
-                // Devolver a Kirby caminando reflejado después de 1.5 segundos
-                setTimeout(() => {
-                // // Asegúrate de que el mensaje se mueva hacia Kirby
-                message.classList.add('moving'); // Agrega la clase que activa el movimiento
-                kirby.classList.remove('enter');
-                kirby.classList.add('exit');
-
-
-
-                }, 4500);
-        
-                // Ocultar el overlay al final de la animación
-                setTimeout(() => {
-                overlay.style.display = 'none';
-                kirby.classList.remove('exit');
-                message.classList.remove('moving');
-                }, 8000);
+          overlay.style.display = 'flex';
+      
+          if (window.innerHeight > window.innerWidth) {
+            // Modo vertical: muestra solo el mensaje
+            if (!animationInProgress && !animationCooldown) {
+              kirby.style.display = 'none';
+              kirby.style.opacity = '0';
+              message.style.opacity = '1';
             }
+          } else if (!animationInProgress && !animationCooldown) {
+            // Modo horizontal: inicia la animación solo si no está en progreso ni en cooldown
+            animationInProgress = true;
+            animationCooldown = true;
+      
+            kirby.style.display = 'block';
+            kirby.style.opacity = '1';
+      
+            // Mostrar a Kirby entrando después de 75 ms
+            setTimeout(() => {
+              kirby.classList.add('enter');
+            }, 75);
+      
+            // Mueve el mensaje hacia Kirby después de 4.5 segundos
+            setTimeout(() => {
+              message.classList.add('moving'); // Activa el movimiento del mensaje
+              kirby.classList.remove('enter');
+              kirby.classList.add('exit');
+            }, 4500);
+      
+            // Ocultar el overlay al final de la animación y reiniciar elementos
+            setTimeout(() => {
+              overlay.style.display = 'none';
+              kirby.classList.remove('exit');
+              message.classList.remove('moving');
+      
+              // Reiniciar estado después de la animación
+              resetAnimationState();
+            }, 8000);
+          }
         } else {
-          overlay.style.display = 'none'; // Ocultar overlay en otros dispositivos
+          overlay.style.display = 'none'; // Oculta el overlay en otros dispositivos
         }
-    }
-    
-      // Verifica la orientación al cargar y cada vez que cambia el tamaño de la ventana
-    window.addEventListener('load', checkOrientation);
-    window.addEventListener('resize', checkOrientation);
+      
+        function resetAnimationState() {
+          animationInProgress = false;
+          animationCooldown = false; // Permite ejecutar nuevamente la animación
+          kirby.style.display = 'none';
+          message.style.opacity = '1';
+          overlay.style.display = 'flex';
+        }
+      }
+      
+      // Verificar la orientación al cargar
+      window.addEventListener('load', checkOrientation);
+      
+      // Detectar el cambio de orientación entre vertical y horizontal
+      window.matchMedia("(orientation: landscape)").addEventListener("change", (e) => {
+        if (e.matches) {
+          // Solo se ejecuta si cambia a horizontal
+          checkOrientation();
+        }
+      });
+      
 
 
 
@@ -1642,6 +1680,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateNintendoTime(0);
     updateSelectedOption(0);
     updateCards(0);
+    console.log(isCertificateOpen)
     
 
 });
