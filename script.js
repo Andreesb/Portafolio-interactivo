@@ -1643,7 +1643,6 @@ document.addEventListener('DOMContentLoaded', () => {
             animationInProgress = true;
             animationCooldown = true; // Activa el cooldown para evitar múltiples ejecuciones
         
-            message.style.opacity = '1';
             kirby.style.display = 'block';
             kirby.style.opacity = '1';
         
