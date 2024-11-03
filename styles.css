@@ -229,9 +229,8 @@ label, input#username {
 }
 
 .user-info {
-    height: 100%;
-    max-width: 190px;
-    max-height: 70px;
+    height: 3vw;
+    width: 10vw;
     position: absolute;
     font-size: 1rem;
     top: 18.3%;
@@ -251,7 +250,8 @@ label, input#username {
     background-color: #ffffff !important;
     border: 2px solid #ff0a0a;
     border-radius: 50%;
-    max-width: 3vw;
+    width: 2.5vw;
+    height: 2.5vw;
     top: 10%;
     left: -3%;
 }
