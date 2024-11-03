@@ -988,8 +988,7 @@ label, input#username {
 }
 
 
-
-.menu-button:focus {
+.confirmation-buttons.sekected, .menu-button.selected {
     outline: none;
     border-color: #FF5733;
 }
@@ -1036,9 +1035,9 @@ label, input#username {
 .form-container select,
 .form-container textarea {
     border: 0.1vw solid #ccc;
-    border-radius: 0.4vw;
+    border-radius: 0.25vw;
     width: 18vw;
-    height: 1.5vw;
+    height: 2vw;
     font-weight: bold;
     font-size: 0.8vw;
 }
@@ -1053,7 +1052,7 @@ label, input#username {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    width: 44vw;
+    width: 42vw;
     padding: 1vw;
     top: 20%;
 }
@@ -1437,7 +1436,7 @@ body.dark-background::before {
 #edit-user-modal #avatar-container {
     display: block;
     position: relative;
-    width: 39vw;
+    width: 44vw;
     top: -1vw;
 }
 
@@ -1453,7 +1452,7 @@ body.dark-background::before {
 #edit-user-modal .avatar-item {
     display: inline-block;
     text-align: center;
-    margin: 0.3vw;
+    margin: 0.2vw 0 0 0.3vw;
 }
 
 .edit-modal .avatar {

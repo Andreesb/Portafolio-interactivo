@@ -184,14 +184,14 @@ document.addEventListener('DOMContentLoaded', () => {
         hideMenu();
         hideAllContent(); // Primero oculta todas las secciones
 
-    const contentElement = document.querySelector(`.${sectionClass}`);
-    if (contentElement) {
-        contentElement.classList.remove('hide');
-        contentElement.classList.add('show');
-        console.log(`mostrando el contenido de la seccion: .${sectionClass}`);
-    } else {
-        console.error(`No se encontró el contenido con la clase: ${sectionClass}`);
-        }
+        const contentElement = document.querySelector(`.${sectionClass}`);
+        if (contentElement) {
+            contentElement.classList.remove('hide');
+            contentElement.classList.add('show');
+            console.log(`mostrando el contenido de la seccion: .${sectionClass}`);
+        } else {
+            console.error(`No se encontró el contenido con la clase: ${sectionClass}`);
+            }
     }
 
     // Oculta una sección específica
@@ -520,15 +520,15 @@ document.addEventListener('DOMContentLoaded', () => {
             showMenu();
 
         } else if(settingsVisible) {
-            if (settingsList.classList.contains('.show')){
-                hideContent('option6')};
-            } else if (editUserModal.classList.contains('show')) {
+            if (editUserModal.classList.contains('show')) {
                 hideEditUserModal();
+            } else {
+                hideContent('option6')};
+                showMenu();
+
+            } else {
+                return
             }
-            
-        else {  
-            return
-        }
     }
     
     
@@ -566,28 +566,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function openEmailLink(index) {
         if (emailOptions.length > 0) {
             const url = emailOptions[index].href;
-            window.open(url, '_blank', 'noopener'); // Abre en una nueva pestaña
+            window.open(url, '_blank', 'noopener');
             console.log('Se abrió el enlace de correo en una nueva pestaña');
         }
     }
     
-    document.addEventListener("keydown", function(event) {
-        if (isContentVisible('option5') && contactInfos[0].classList.contains('expanded')) {
-            switch(event.key) {
-                case "ArrowLeft":
-                    IndexEmailOptions = (IndexEmailOptions > 0) ? IndexEmailOptions - 1 : IndexEmailOptions;
-                    updateActiveEmailOption(IndexEmailOptions);
-                    break;
-                case "ArrowRight":
-                    IndexEmailOptions = (IndexEmailOptions < emailOptions.length - 1) ? IndexEmailOptions + 1 : IndexEmailOptions;
-                    updateActiveEmailOption(IndexEmailOptions);
-                    break;
-                case "Enter":
-                    openEmailLink(IndexEmailOptions);
-                    break;
-            }
-        }
-    });
     
     // Detecta cuando la opción 1 (Mails) está seleccionada y muestra las opciones de correo
     function updateActiveContact(index) {
@@ -732,9 +715,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 update: () => updateCarousel()
             },
             contactList: {
-                up: () => IndexContactList = (IndexContactList > 0) ? IndexContactList - 1 : IndexContactList,
-                down: () => IndexContactList = (IndexContactList < contactItems.length - 1) ? IndexContactList + 1 : IndexContactList,
-                update: () => updateActiveContact(IndexContactList)
+                up: () => {
+                    IndexContactList = (IndexContactList - 1 + contactItems.length) % contactItems.length;
+                    updateActiveContact(IndexContactList);
+                },
+                down: () => {
+                    IndexContactList = (IndexContactList + 1) % contactItems.length;
+                    updateActiveContact(IndexContactList);
+                },
+                left: () => {
+                    IndexEmailOptions = (IndexEmailOptions > 0) ? IndexEmailOptions - 1 : emailOptions.length - 1;
+                    updateActiveEmailOption(IndexEmailOptions);
+                },
+                right: () => {
+                    IndexEmailOptions = (IndexEmailOptions + 1) % emailOptions.length;
+                    updateActiveEmailOption(IndexEmailOptions);
+                }
             },
             reportMenu: {
                 left: () => navigateMenu(direction),
@@ -839,11 +835,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isContentVisible('option5')) {
             switch(event.key) {
                 case "ArrowUp":
-                    IndexContactList = (IndexContactList > 0) ? IndexContactList - 1 : IndexContactList;
+                    IndexContactList = (IndexContactList - 1 + contactItems.length) % contactItems.length;
                     updateActiveContact(IndexContactList);
                     break;
                 case "ArrowDown":
-                    IndexContactList = (IndexContactList < contactItems.length - 1) ? IndexContactList + 1 : IndexContactList;
+                    IndexContactList = (IndexContactList + 1) % contactItems.length;
                     updateActiveContact(IndexContactList);
                     break;
                 case "Enter":
@@ -853,21 +849,43 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+    document.addEventListener("keydown", function(event) {
+        if (isContentVisible('option5') && contactInfos[0].classList.contains('expanded')) {
+            switch(event.key) {
+                case "ArrowLeft":
+                    IndexEmailOptions = (IndexEmailOptions > 0) ? IndexEmailOptions - 1 : emailOptions.length - 1;
+                    updateActiveEmailOption(IndexEmailOptions);
+                    break;
+                case "ArrowRight":
+                    IndexEmailOptions = (IndexEmailOptions + 1) % emailOptions.length;
+                    updateActiveEmailOption(IndexEmailOptions);
+                    break;
+                case "Enter":
+                    openEmailLink(IndexEmailOptions);
+                    break;
+            }
+        }
+    });
     
     
     aButton.addEventListener('click', () => {
         const activeIndex = Array.from(contactItems).findIndex(item => item.classList.contains('active'));
         if (isContentVisible('option5')) {
-            if (activeIndex !== -1) {
+            // Comprueba si estamos en la opción de "Mails"
+            if (activeIndex === 0 && contactInfos[0].classList.contains('expanded')) {
+                openEmailLink(IndexEmailOptions);
+                console.log('Enviar mail con el botón A');
+            } else if (activeIndex !== -1) {
+                // Si estamos en otra opción de contacto, abre el enlace del contacto
                 openContactLink(IndexContactList);
-                console.log('se selecciono la opcion de contacto con la a')
-
+                console.log('Se seleccionó la opción de contacto con el botón A');
             }
         } else {
-            console.log('no esta la lista de contact')
+            console.log('La lista de contactos no está visible');
         }
     });
-
+    
     
 
     document.addEventListener('click', (event) => {
@@ -883,9 +901,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
-
-    
-
 
 
     // Ajustar eventos de los botones del control
@@ -906,13 +921,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else if (isContentVisible('option4')) {
                     if (reportMenu.style.display == 'flex'){
                         openForm(menuButtons[selectedButtonIndex].getAttribute('data-form'));
+                        console.log('se abrio el formulario')
                     } else if (!confirmationDialog.classList.contains('hide')) {
                         if (document.activeElement === confirmButton) {
                             hideConfirmationMessage();
                             showSuccessMessage();
-                            if (activeForm) {
-                                clearFormFields(activeForm);
-                            }}
+                            clearFormFields(activeForm);
+                            }
                         } else if (document.activeElement === backButton) {
                             hideConfirmationMessage();
                         }
@@ -970,10 +985,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const confirmButton = document.getElementById('confirm-button');
     const backButton = document.getElementById('back-button');
     const successMessage = document.getElementById('success-message');
+    const activeForm = document.getElementsByClassName('.form-container.show form');
 
     // Función para seleccionar el botón del menú
     function selectMenuButton(index) {
-        menuButtons.forEach((button, i) => {
+        if (isContentVisible('option4')) {
+            menuButtons.forEach((button, i) => {
             if (i === index) {
                 button.classList.add('selected');
                 button.focus();
@@ -982,6 +999,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         selectedButtonIndex = index;
+    }};
+
+    // Navegar en el menú
+    function navigateMenu(direction) {
+        const newIndex = (selectedButtonIndex + (direction === 'right' ? 1 : -1) + menuButtons.length) % menuButtons.length;
+        selectMenuButton(newIndex);
     }
 
     // Función para seleccionar un campo del formulario
@@ -997,12 +1020,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Navegar en el menú
-    function navigateMenu(direction) {
-        const newIndex = (selectedButtonIndex + (direction === 'right' ? 1 : -1) + menuButtons.length) % menuButtons.length;
-        selectMenuButton(newIndex);
-    }
-
     // Navegar en los campos del formulario
     function navigateFormFields(direction, form) {
         const inputs = Array.from(form.querySelectorAll('input, textarea, select, button'));
@@ -1011,8 +1028,37 @@ document.addEventListener('DOMContentLoaded', () => {
         selectFormField(newIndex, form);
     }
 
+    
+
+        // Abrir formulario
+        function openForm(formId) {
+            {reportMenu.style.display = 'none';
+            const form = document.getElementById(formId);
+            form.classList.remove('hide');
+            form.classList.add('show');
+    
+            const firstInput = form.querySelector('button:not([type="submit"]), textarea, select');
+            if (firstInput) {
+                selectFormField(0, form);
+            }
+        }}
+    
+        console.log('')
+    
+
+    // Cerrar formulario y volver al menú
+    function closeForm() {
+        reportForm.classList.add('hide');
+        suggestForm.classList.add('hide');
+        reportForm.classList.remove('show');
+        suggestForm.classList.remove('show');
+        reportMenu.style.display = 'flex';
+        selectMenuButton(selectedButtonIndex);
+    }
+
     // Función para validar el formulario
     function validateForm(form) {
+        
         const inputs = form.querySelectorAll('input[type="text"], textarea');
         let valid = true;
 
@@ -1027,7 +1073,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         return valid;
+        
     }
+
 
     // Mostrar mensaje de confirmación
     function showConfirmationMessage() {
@@ -1054,20 +1102,10 @@ document.addEventListener('DOMContentLoaded', () => {
         form.reset();
     }
 
-    // Cerrar formulario y volver al menú
-    function closeForm() {
-        reportForm.classList.add('hide');
-        suggestForm.classList.add('hide');
-        reportForm.classList.remove('show');
-        suggestForm.classList.remove('show');
-        reportMenu.style.display = 'flex';
-        selectMenuButton(selectedButtonIndex);
-    }
-
     // Manejo de teclas para el menú y formularios
     document.addEventListener('keydown', (event) => {
-        const activeForm = document.querySelector('.form-container.show form');
-        
+        if(isContentVisible('option4')) {
+            const activeForm = document.querySelector('.form-container.show form');
         if (reportMenu.style.display !== 'none') {
             switch (event.key) {
                 case 'ArrowRight':
@@ -1091,14 +1129,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 case 'Escape':
                     closeForm();
                     break;
+
             }
         }
+    }
     });
 
-    /*
+    
     // Envío de formulario cuando se presiona el botón "A"
     aButton.addEventListener('click', () => {
-        const activeForm = document.querySelector('.form-container.show form');
         if (activeForm) {
             if (validateForm(activeForm)) {
                 showConfirmationMessage();
@@ -1106,29 +1145,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Envío de formularios con la tecla Enter o el botón "A"
+    // Envío de formularios con la tecla Enter
     document.addEventListener('keydown', function(event) {
         const activeForm = document.querySelector('.form-container.show form');
-        
         if (activeForm && (event.key === 'Enter')) {
-            event.preventDefault(); // Prevenir el comportamiento por defecto del Enter
             if (validateForm(activeForm)) {
                 showConfirmationMessage();
             }
         }
     });
-    */
+    
 
     // Manejo de teclas en la confirmación
     document.addEventListener('keydown', (event) => {
-        if (!confirmationDialog.classList.contains('hide')) {
+        if (isContentVisible('option4') && !confirmationDialog.classList.contains('hide')) {
             switch (event.key) {
                 case 'ArrowRight':
                 case 'ArrowLeft':
                     if (document.activeElement === confirmButton) {
-                        backButton.focus();
+                        backButton.classList.add('selected');
                     } else {
-                        confirmButton.focus();
+                        confirmButton.classList.add('selected');
                     }
                     break;
                 case 'Enter':
@@ -1152,7 +1189,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // Envío de formularios con validación
-    reportForm.addEventListener('submit', function(event) {
+    reportForm.addEventListener('Enter', function(event) {
         event.preventDefault();
         if (validateForm(this)) {
             showConfirmationMessage();
@@ -1160,7 +1197,7 @@ document.addEventListener('DOMContentLoaded', () => {
         clearFormFields(this);
     });
 
-    suggestForm.addEventListener('submit', function(event) {
+    suggestForm.addEventListener('Enter', function(event) {
         event.preventDefault();
         if (validateForm(this)) {
             showConfirmationMessage();
@@ -1168,21 +1205,8 @@ document.addEventListener('DOMContentLoaded', () => {
         clearFormFields(this);
     });
 
-    // Abrir formulario
-    function openForm(formId) {
-        reportMenu.style.display = 'none';
-        const form = document.getElementById(formId);
-        form.classList.remove('hide');
-        form.classList.add('show');
 
-        const firstInput = form.querySelector('button:not([type="submit"]), textarea, select');
-        if (firstInput) {
-            selectFormField(0, form);
-        }
-    }
-
-    // Inicializar el foco en el menú
-    selectMenuButton(selectedButtonIndex);
+    
 
     // Manejar la selección de relevancia con 'Enter'
     document.addEventListener('keydown', function(event) {
@@ -1252,6 +1276,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const settingsOption = document.querySelectorAll('.setting-option');
     const editUserModal = document.getElementById('edit-user-modal');
     const settingsList = document.querySelector('.settings-list');
+    let settingIndex = 0
 
     // Función para actualizar el estado activo
     function updateActiveOption(index) {
@@ -1262,18 +1287,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Navegación por las opciones usando flechas o botones del Nintendo
     document.addEventListener('keydown', (event) => {
-        if (!editUserModal && isContentVisible('option6')){
+        if (isContentVisible('option6')){
             switch (event.key) {
             case 'ArrowUp': // Navegar hacia arriba
-                currentIndex = (currentIndex > 0) ? currentIndex - 1 : settingsOption.length - 1;
-                updateActiveOption(currentIndex);
+                settingIndex = (settingIndex > 0) ? settingIndex - 1 : settingsOption.length - 1;
+                updateActiveOption(settingIndex);
                 break;
             case 'ArrowDown': // Navegar hacia abajo
-                currentIndex = (currentIndex < settingsOption.length - 1) ? currentIndex + 1 : 0;
-                updateActiveOption(currentIndex);
+                settingIndex = (settingIndex < settingsOption.length - 1) ? settingIndex + 1 : 0;
+                updateActiveOption(settingIndex);
                 break;
             case 'Enter': // Seleccionar opción
-                const selectedOption = settingsOption[currentIndex];
+                const selectedOption = settingsOption[settingIndex];
                 const action = selectedOption.dataset.action;
                 if (action) {
                     handleAction(action);
@@ -1301,8 +1326,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return
         }
     }
-
-
 
 
     function loadAvatars(containerId) {
@@ -1474,9 +1497,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
 
     function hideEditUserModal() {
-        document.getElementById('edit-user-modal').classList.add('hide');
+        editUserModal.classList.remove('show');
+        editUserModal.classList.add('hide');
         settingsList.classList.remove('hide');
-        loadAvatars('edit-avatar-selection');
         
     }
 
@@ -1581,7 +1604,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 break;
             case 'Enter':
-
                 const selectedAvatar = avatars[currentAvatarIndex].getAttribute('data-avatar');
                 avatars[currentAvatarIndex].classList.add('selected');
                 localStorage.setItem('avatar', selectedAvatar); // Guardar en localStorage
@@ -1603,76 +1625,71 @@ document.addEventListener('DOMContentLoaded', () => {
         const kirby = document.getElementById('kirby-gif');
         const message = document.getElementById('rotate-message');
         const isMobileOrTablet = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        let animationInProgress = false; // Bandera para controlar el estado de la animación
-        let animationCooldown = false; // Bloquea la animación hasta que termine
-      
+        let animationInProgress = false; // Controla si la animación está en progreso
+        let animationCooldown = false;   // Controla si la animación puede ejecutarse nuevamente
+        
         if (isMobileOrTablet) {
-          overlay.style.display = 'flex';
-      
-          if (window.innerHeight > window.innerWidth) {
-            // Modo vertical: muestra solo el mensaje
+            overlay.style.display = 'flex';
+        
+            // Mostrar solo el mensaje en modo vertical
+            if (window.innerHeight > window.innerWidth) {
             if (!animationInProgress && !animationCooldown) {
-              kirby.style.display = 'none';
-              kirby.style.opacity = '0';
-              message.style.opacity = '1';
+                kirby.style.display = 'none';
+                kirby.style.opacity = '0';
+                message.style.opacity = '1';
             }
-          } else if (!animationInProgress && !animationCooldown) {
-            // Modo horizontal: inicia la animación solo si no está en progreso ni en cooldown
+            } else if (!animationInProgress && !animationCooldown) {
+            // Modo horizontal: inicia la animación si no está en progreso o en cooldown
             animationInProgress = true;
-            animationCooldown = true;
-      
+            animationCooldown = true; // Activa el cooldown para evitar múltiples ejecuciones
+        
+            message.style.opacity = '1';
             kirby.style.display = 'block';
             kirby.style.opacity = '1';
-      
+        
             // Mostrar a Kirby entrando después de 75 ms
             setTimeout(() => {
-              kirby.classList.add('enter');
+                kirby.classList.add('enter');
             }, 75);
-      
-            // Mueve el mensaje hacia Kirby después de 4.5 segundos
+        
+            // Mover el mensaje hacia Kirby después de 4.5 segundos
             setTimeout(() => {
-              message.classList.add('moving'); // Activa el movimiento del mensaje
-              kirby.classList.remove('enter');
-              kirby.classList.add('exit');
+                message.classList.add('moving'); // Activa el movimiento del mensaje
+                kirby.classList.remove('enter');
+                kirby.classList.add('exit');
             }, 4500);
-      
-            // Ocultar el overlay al final de la animación y reiniciar elementos
+        
+            // Ocultar el overlay y resetear después de 8 segundos
             setTimeout(() => {
-              overlay.style.display = 'none';
-              kirby.classList.remove('exit');
-              message.classList.remove('moving');
-      
-              // Reiniciar estado después de la animación
-              resetAnimationState();
+                overlay.style.display = 'none';
+                kirby.classList.remove('exit');
+                message.classList.remove('moving');
+                animationInProgress = false; // Marca la animación como terminada
+        
+                // Rehabilitar animación después de 1 segundo de enfriamiento
+                setTimeout(() => {
+                animationCooldown = false; // Reinicia el cooldown para permitir nuevas ejecuciones
+                }, 1000);
+        
             }, 8000);
-          }
+            }
         } else {
-          overlay.style.display = 'none'; // Oculta el overlay en otros dispositivos
+            overlay.style.display = 'none'; // Oculta el overlay en otros dispositivos
         }
-      
-        function resetAnimationState() {
-          animationInProgress = false;
-          animationCooldown = false; // Permite ejecutar nuevamente la animación
-          kirby.style.display = 'none';
-          message.style.opacity = '1';
-          overlay.style.display = 'flex';
         }
-      }
-      
-      // Verificar la orientación al cargar
-      window.addEventListener('load', checkOrientation);
-      
-      // Detectar el cambio de orientación entre vertical y horizontal
-      window.matchMedia("(orientation: landscape)").addEventListener("change", (e) => {
+        
+        // Verificar la orientación al cargar
+        window.addEventListener('load', checkOrientation);
+        
+        // Detectar el cambio de orientación entre vertical y horizontal
+        window.matchMedia("(orientation: landscape)").addEventListener("change", (e) => {
         if (e.matches) {
-          // Solo se ejecuta si cambia a horizontal
-          checkOrientation();
+            // Solo se ejecuta si cambia a horizontal
+            checkOrientation();
         }
-      });
-      
+    });
 
-
-
+    selectMenuButton(selectedButtonIndex);
     updateActiveOption(0);
     updateCarousel(0);
     updateSelectedFolder(0);
@@ -1680,7 +1697,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateNintendoTime(0);
     updateSelectedOption(0);
     updateCards(0);
-    console.log(isCertificateOpen)
+    console.log(activeForm)
     
 
 });
