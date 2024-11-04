@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         timeElement.textContent = `${hours}:${minutes}`;
     }
 
-    setInterval(updateNintendoTime, 500);
+    setInterval(updateNintendoTime, 1500);
 
     function updateSignalIcon(ping) {
         const bars = document.querySelectorAll('.bar');
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
     
-    setInterval(measurePing, 500);
+    setInterval(measurePing, 1500);
 
 
     function showMenu() {
