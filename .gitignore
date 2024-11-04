@@ -2,7 +2,8 @@
 # Ignora las carpetas específicas
 hello-world/
 react/
-"*.log" 
+"*.log"
 backup/
 media/nintendo/os/Certificates/ph/
 media/nintendo/os/Certificates/pdfs/
+media/nintendo/os/assistant/frames/
