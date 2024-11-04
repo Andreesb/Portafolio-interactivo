@@ -507,6 +507,7 @@ document.addEventListener('DOMContentLoaded', () => {
             hideAllContent();
             showMenu();
             
+            
             }
         } else if (testContact) {
             hideContent('option5');
@@ -1189,7 +1190,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // Envío de formularios con validación
-    reportForm.addEventListener('Enter', function(event) {
+    reportForm.addEventListener('submit', function(event) {
         event.preventDefault();
         if (validateForm(this)) {
             showConfirmationMessage();
@@ -1197,7 +1198,7 @@ document.addEventListener('DOMContentLoaded', () => {
         clearFormFields(this);
     });
 
-    suggestForm.addEventListener('Enter', function(event) {
+    suggestForm.addEventListener('submit', function(event) {
         event.preventDefault();
         if (validateForm(this)) {
             showConfirmationMessage();
