@@ -565,6 +565,7 @@ label, input#username {
     visibility: hidden;
     opacity: 0;
     animation: fadeIn 0.5s ease-in-out;
+
 }
 
 .menu-container.show {
@@ -1353,7 +1354,9 @@ body.dark-background::before {
     gap: 1vw;
     height: 31.5vw;
     width: 45.1vw;
-    background-color: rgba(255, 255, 255, 0.700);
+    background:
+        linear-gradient(180deg, #f0f0f0c9, transparent) padding-box,
+        linear-gradient(180deg ,#09f, transparent) border-box;
     position: absolute;
     top: 2.1%;
     left: 0.6%;

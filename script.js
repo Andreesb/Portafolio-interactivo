@@ -28,11 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const backgrounds = [
         '',
-        'media/nintendo/os/resume/tarjetaImage1.gif',
-        'media/nintendo/os/resume/tarjetaImage2.gif',
-        'media/nintendo/os/resume/tarjetaImage3.gif',
-        'media/nintendo/os/resume/tarjetaImage4.gif',
-        'media/nintendo/os/resume/tarjetaImageBase.jpg',
+        'media/nintendo/os/Resume/tarjetaImage1.gif',
+        'media/nintendo/os/Resume/tarjetaImage2.gif',
+        'media/nintendo/os/Resume/tarjetaImage3.gif',
+        'media/nintendo/os/Resume/tarjetaImage4.gif',
+        'media/nintendo/os/Resume/tarjetaImageBase.jpg',
     ];
 
 
@@ -168,7 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         menuContainer.classList.add('show');
         menuContainer.classList.remove('hide');
-
         console.log("se abrió el menú");
     }
 
@@ -245,7 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
         currentFolderContents.forEach(content => {
             content.classList.remove('show');
             
-
         });
 
     }
