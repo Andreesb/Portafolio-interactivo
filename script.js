@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'media/nintendo/os/Resume/tarjetaImage2.gif',
         'media/nintendo/os/Resume/tarjetaImage3.gif',
         'media/nintendo/os/Resume/tarjetaImage4.gif',
-        'media/nintendo/os/Resume/tarjetaImageBase.jpg',
+        'media/nintendo/os/Resume/tarjetaImagebase.jpg',
     ];
 
 
