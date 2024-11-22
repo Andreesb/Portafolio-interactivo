@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             cardContainer.style.backgroundImage = `url(${backgrounds[cardIndex]})`;
-
+            
             updateTextVisibility(leftTexts, cardIndex);
             updateTextVisibility(centerTexts, cardIndex);
             updateTextVisibility(rightTexts, cardIndex);

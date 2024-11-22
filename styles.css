@@ -228,37 +228,7 @@ label, input#username {
 
 }
 
-.user-info {
-    height: 3vw;
-    width: 10vw;
-    position: absolute;
-    font-size: 1rem;
-    top: 18.3%;
-    left: 2%;
-    color: #f7f7f7;
-    padding: 0.5%;
-    display: flex;
-    align-items: center;
-    z-index: 1115;
 
-}
-
-.user-info img {
-    position: relative;
-    margin: 1%;
-    padding: 3%;
-    background-color: #ffffff !important;
-    border: 2px solid #ff0a0a;
-    border-radius: 50%;
-    width: 3.5vw;
-    height: 3.5vw;
-    top: 10%;
-    left: -3%;
-}
-
-.user-info span {
-    font-size: 1vw;
-}
 
 #submit-user {
     position: relative;
@@ -321,7 +291,7 @@ label, input#username {
 
 .control-button:hover {
     background-color: rgba(184, 184, 184, 0.9);
-    opacity: 0.1;
+    opacity: 0;
 }
 
 .control-button:active {
@@ -477,7 +447,7 @@ label, input#username {
     z-index: 1100;
 
 }
-
+/*Notification bar*/
 
 .notification-bar{
     height: 7%;
@@ -487,6 +457,40 @@ label, input#username {
     z-index: 200;
     align-items: center;
 }
+
+.user-info {
+    height: 3vw;
+    width: 10vw;
+    position: absolute;
+    font-size: 1rem;
+    top: 0%;
+    left: 2%;
+    color: #f7f7f7;
+    padding: 0.5%;
+    display: flex;
+    align-items: center;
+    z-index: 1115;
+
+}
+
+.user-info img {
+    position: relative;
+    margin: 1%;
+    padding: 3%;
+    background-color: #ffffff !important;
+    border: 2px solid #ff0a0a;
+    border-radius: 50%;
+    width: 2vw;
+    height: 2vw;
+    top: 10%;
+    left: -3%;
+}
+
+.user-info span {
+    font-size: 1vw;
+}
+
+
 
 #battery-image {
     background-color: transparent !important;
@@ -751,41 +755,54 @@ label, input#username {
 /* Seccion Resume */
 
 
+#resume-content {
+    height: 94%;
+    width: 96.5%;
+    background-color: rgba(255, 255, 255, 0.699);
+    border: 0.4vw solid #ffffff;
+    border-radius: 3%;
+    left: 0.5%;
+    top: 2%;
+    position: absolute;
+}
+
+#resume-content h1 {
+    text-align: center;
+    z-index: 100;
+    position: relative;
+}
+
 .card-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    perspective: 500px;
     position: absolute;
-    bottom: 2%;
-    left: 1%;
-    width: 44.9vw;
-    height: 31.2vw;
-    background-position: center;
+    left: 45%;
+    top: 0%;
+    width: 25.9vw;
+    height: 31.5vw;
     background-size: cover;
-    background-color: rgba(255, 255, 255, 0.699);
-    border: 0.4vw solid #ffffff;
-    border-radius: 3%;
     overflow: hidden;
     transition: background-image 0.5s;
 }
 
 .card {
     position: absolute;
-    bottom: 10%;
-    width: 100%;
-    max-width: 12vw;
+    bottom: 5%;
+    width: 10vw;
+    max-width: 195px;
+    max-height: 20px;
     background-color: #f0f0f0;
     border: 0.3em solid #000000;
-    border-radius: 8%;
+    border-radius: 0.4vw;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-size: 1vw;
+    font-size: 0.9vw;
     transition: transform 0.5s, opacity 0.5s;
-    padding: 2%;
+    padding: 1vw;
 }
 
 .card[data-index="2"] {
@@ -815,41 +832,75 @@ label, input#username {
 }
 
 .card.prev {
-    transform: translateZ(50px) translateY(50px) scale(0.7);
-    opacity: 0.7;
+    transform: translateZ(5px) translateY(5px) scale(0.7);
+    opacity: 0;
     z-index: 24;
 }
 
 .card.next {
-    transform: translateZ(50px) translateY(-50px) scale(0.7);
-    opacity: 0.7;
+    transform: translateZ(5px) translateY(-5px) scale(0.7);
+    opacity: 0;
     z-index: 24;
 }
 
 .card.inactive {
-    transform: translateZ(0px) translateY(100px) scale(0.5);
-    opacity: 0.5;
+    transform: translateZ(0px) translateY(50px) scale(0.5);
+    opacity: 0;
     z-index: 23;
 }
 
 .text-container {
     position: absolute;
     top: 20%;
-    width: 100%;
+    width: 70%;
+    left:37%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 3%;
     box-sizing: border-box;
     text-align: center;
-
 }
-.text-container h1 {
-    font-size: 2vw;
-    position:  relative;
-    left: 25%;
-    top: -65%;
-    align-content: center;
-    
+
+.resume-Data {
+    width: 18vw;
+    height: 27vw;
+    position: absolute;
+    top: 10%;
+    left: 1%;
+    background-color: beige;
+    border: 0.2vw solid;
+}
+
+.resume-Data h4 {
+    position: relative;
+    font-size: 1vw;
+    text-align: center;
+    margin: 1vw;
+}
+
+.resume-Character {
+    width: 12vw;
+    background: #888888 !important;
+    position: relative;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border: 0.2vw solid;
+}
+
+
+.resume-Data p {
+    position: relative;
+    top: 5%;
+    font-size: 0.8vw;
+    padding: 0.5vw;
+    margin: 0;
+    max-width: 100%;
+    border: 0.1vw solid;
+    border-left: 0;
+    border-right: 0;
+    background-color: darkkhaki;
+
 }
 
 .text {
@@ -858,10 +909,7 @@ label, input#username {
     display: none;
 }
 
-.left-text {
-    width: 30%;
-    text-align: left;
-}
+
 
 .center-text {
     width: 30%;
@@ -871,10 +919,6 @@ label, input#username {
 .right-text {
     width: 30%;
     text-align: right;
-}
-
-#left-text-1 {
-    text-align: center;
 }
 
 /* Seccion del carrusel*/
@@ -1383,7 +1427,7 @@ body.dark-background::before {
 
 .email-options li {
     display: inline-block;
-    margin: 5px;
+    margin: 0.1w;
 }
 
 .email-options li a img {
