@@ -58,25 +58,25 @@ document.addEventListener('DOMContentLoaded', () => {
         let buttonImage;
 
         switch (button) {
-            case 'up': buttonImage = 'media/nintendo/up.png'; break;
-            case 'left': buttonImage = 'media/nintendo/left.png'; break;
-            case 'right': buttonImage = 'media/nintendo/right.png'; break;
-            case 'down': buttonImage = 'media/nintendo/down.png'; break;
-            case 'X': buttonImage = 'media/nintendo/X.png'; break;
-            case 'Y': buttonImage = 'media/nintendo/Y.png'; break;
-            case 'A': buttonImage = 'media/nintendo/A.png'; break;
-            case 'B': buttonImage = 'media/nintendo/B.png'; break;
-            case 'start': buttonImage = 'media/nintendo/start.png'; break;
-            case 'pause': buttonImage = 'media/nintendo/pause.png'; break;
-            case 'volume-up': buttonImage = 'media/nintendo/plus.png'; break;
-            case 'volume-down': buttonImage = 'media/nintendo/minus.png'; break;
-            default: buttonImage = 'media/nintendo/nintendoNUEVO.png';
+            case 'up': buttonImage = 'media/nintendo/up.avif'; break;
+            case 'left': buttonImage = 'media/nintendo/left.avif'; break;
+            case 'right': buttonImage = 'media/nintendo/right.avif'; break;
+            case 'down': buttonImage = 'media/nintendo/down.avif'; break;
+            case 'X': buttonImage = 'media/nintendo/X.avif'; break;
+            case 'Y': buttonImage = 'media/nintendo/Y.avif'; break;
+            case 'A': buttonImage = 'media/nintendo/A.avif'; break;
+            case 'B': buttonImage = 'media/nintendo/B.avif'; break;
+            case 'start': buttonImage = 'media/nintendo/start.avif'; break;
+            case 'pause': buttonImage = 'media/nintendo/pause.avif'; break;
+            case 'volume-up': buttonImage = 'media/nintendo/plus.avif'; break;
+            case 'volume-down': buttonImage = 'media/nintendo/minus.avif'; break;
+            default: buttonImage = 'media/nintendo/nintendoNUEVO.avif';
         }
 
         if (isPressing) {
             nintendoImage.src = buttonImage;
         } else {
-            nintendoImage.src = 'media/nintendo/nintendoNUEVO.png';
+            nintendoImage.src = 'media/nintendo/nintendoNUEVO.avif';
         }
     }
 
@@ -688,8 +688,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const carouselVisible = isContentVisible('option3');
         const contactListVisible = isContentVisible('option5');
         const reportsVisible = isContentVisible('option4');
-        const isReportFormVisible = document.querySelector('#form-reports').classList.contains('show');
-        const isSuggestFormVisible = document.querySelector('#form-suggests').classList.contains('show');
+        const isReportFormVisible = document.getElementById('form-reports').classList.contains('show');
+        const isSuggestFormVisible = document.getElementById('form-suggests').classList.contains('show');
         const settingsVisible = isContentVisible('option6');
         const editUserVisible = document.getElementById('edit-user-modal').classList.contains('show');
         const menuVisible = menuContainer.classList.contains('show');
@@ -786,8 +786,6 @@ document.addEventListener('DOMContentLoaded', () => {
         lastMoveTime = now;
     }
 
-    
-    
 
     // Evento para manejar la navegación y selección con el teclado
     document.addEventListener('keydown', (event) => {
@@ -1036,7 +1034,7 @@ document.addEventListener('DOMContentLoaded', () => {
             form.classList.remove('hide');
             form.classList.add('show');
     
-            const firstInput = form.querySelector('button:not([type="submit"]), textarea, select');
+            const firstInput = form.querySelector('textarea, select');
             if (firstInput) {
                 selectFormField(0, form);
             }
@@ -1056,23 +1054,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Función para validar el formulario
-    function validateForm(form) {
-        
-        const inputs = form.querySelectorAll('input[type="text"], textarea');
-        let valid = true;
-
+    function validateForm() {
+        const inputs = document.querySelectorAll('input[type="text"], textarea');
         inputs.forEach(input => {
-            if (input.value.trim() === '') {
-                valid = false;
+            if (!input.value.trim()) {
+                console.warn(`El campo "${input.name}" está vacío`);
             }
         });
-
-        if (!valid) {
-            alert('Por favor, completa todos los campos obligatorios.');
-        }
-
-        return valid;
-        
     }
 
 
